@@ -1,0 +1,43 @@
+html {
+    font-size: 62.5%; 
+}
+
+.new-message-form {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+    gap: 1rem;
+    background-color: transparent;
+    width: 100%;
+    z-index: 10;
+    position: sticky;
+    width: 100%;
+    box-sizing: border-box;
+    bottom: 0;
+}
+
+.form-input-group {
+    flex: 1;
+}
+
+.form-input-group input {
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    border-radius: 2rem;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.send-message-button {
+    background-color: #00bfa5;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

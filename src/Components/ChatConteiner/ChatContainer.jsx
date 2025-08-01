@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import  { useState, useEffect } from "react";
 import Sidebar from "../SideBar/SideBar";
 import Chats from "../Chats/Chats";
-import "./ChatContainer.css";
-import NewMessagesForm from "../NewMessagesForm/NewMessagesForm";
+import "./ChatContainer.css"
+import contacts from "../../data/contacts";
+import { useParams, useNavigate} from "react-router-dom";
 
 const ChatContainer = () => {
+
+    const {contactId} = useParams(); /* recibe el id de la url */
+    const navigate = useNavigate(); /* hook para navegar entre paginas */
     const [selectedContact, setSelectedContact] = useState(null);
     const [messages, setMessages] = useState({
         1: [
@@ -69,6 +73,22 @@ const ChatContainer = () => {
         ],
     });
 
+    useEffect(() => {
+        if (!contactId) {
+            setSelectedContact(null);
+            return;
+        }
+
+        const contactFound = contacts.find((contact) => contact.id === Number(contactId));
+
+        if (contactFound) {
+            setSelectedContact(contactFound);
+        } else {
+            navigate("/");
+        }
+    }, [contactId, navigate]);/*escucha el cambio si hay del  contact id traido de useparams
+    si hay un cambio e contactid se monta el useeffect*/
+
     const deleteMessage = (index) => {
         if (!selectedContact) return;
         const mensajesActualizados = [...messages[selectedContact.id]];
@@ -105,26 +125,19 @@ const ChatContainer = () => {
     };
 
     return (
-        <div className="chat-container">
-            
-            <Sidebar setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
-            
-            <Chats
-                selectedContact={selectedContact}
-                messages={selectedContact ? messages[selectedContact.id] : []}
-                deleteMessage={deleteMessage}
-                deleteAllMessages={deleteAllMessages}
-            />
-            
-            {selectedContact && (
-                
-                <NewMessagesForm
-                    addNewMessage={addNewMessage}
-                />
+    <div className="chat-container">
+        <Sidebar setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
 
-            )}
+        <Chats
+            selectedContact={selectedContact}
+            messages={selectedContact ? messages[selectedContact.id] : []}
+            deleteMessage={deleteMessage}
+            deleteAllMessages={deleteAllMessages}
+            addNewMessage={addNewMessage}
+        />
+    </div>
         
-        </div>
+
     );
 };
 

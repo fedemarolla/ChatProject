@@ -1,11 +1,97 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-image: url('../../imagenes/fondo-chat.png');
+    overflow: hidden;
+}
+
+.no-contact-selected {
+    background-repeat: no-repeat;
+    display: flex;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+    background-color: rgb(247, 245, 242)
+}
+
+.no-contact-selected h2 {
+    font-size: 3.6rem;
+    font-weight: 200;
+    line-height: 1;
+    margin: 2rem 0 1rem;
+    color: rgb(11, 11, 18)
+}
+
+.no-contact-selected p {
+    font-size: 1.4rem;
+    color: #666;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+}
+
+button.Descargar {
+    background-color: #25d366;
+    color: white;
+    font-size: 1.6rem;
+    padding: 1rem 2.4rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-mensajes {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+.image-profile-chat{
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    font-size: 1.3rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+}
+
+.delete-all-button{
+    background: none;
+    box-sizing: border-box;
+    border-radius: 2rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    color: #666;
+    font-size: 1.4rem;
+    transition: color 0.2s;
+}
+
 .message-list {
     padding: 1.6rem;
     overflow-y: auto;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-image: url('../../imagenes/fondo-chat.png');
-    }
+}
 
 .message-bubble {
     max-width: 70%;
@@ -16,14 +102,12 @@
     font-size: 14px;
     }
 
-    /* Tus mensajes (Homero) */
 .message-bubble.sent {
     align-self: flex-end;
-    background-color: #dcf8c6;
+    background-color: rgb(216, 252, 210);
     text-align: right;
     }
 
-    /* Mensajes recibidos */
 .message-bubble.received {
     align-self: flex-start;
     background-color: #ffffff;
@@ -42,4 +126,14 @@
 
 .delete-message-button:hover {
     color: red;
+    }
+
+.enviar-msj {
+    z-index: 999;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    position: sticky;
+    bottom: 0;
     }
