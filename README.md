@@ -65,7 +65,7 @@ This project is built using the following technologies and tools:
 ## Deployment
 
 You can access the deployed version of this project here:  
-👉 https://marollawhatsapp.netlify.app/
+👉 https://marolla-whatsap.netlify.app
 
 ---
 
