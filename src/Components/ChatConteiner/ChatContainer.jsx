@@ -1,15 +1,14 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../SideBar/SideBar";
 import Chats from "../Chats/Chats";
-import "./ChatContainer.css"
+import "./ChatContainer.css";
 import contacts from "../../data/contacts";
-import { useParams, useNavigate} from "react-router-dom";
 
 const ChatContainer = () => {
-
-    const {contactId} = useParams(); /* recibe el id de la url */
-    const navigate = useNavigate(); /* hook para navegar entre paginas */
-    const [selectedContact, setSelectedContact] = useState(null);
+    const { contactId } = useParams();
+    const navigate = useNavigate();
+    
     const [messages, setMessages] = useState({
         1: [
             { id: 2, autor: "Homero", texto: "¡Hola Homero!" },
@@ -73,71 +72,90 @@ const ChatContainer = () => {
         ],
     });
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [showChat, setShowChat] = useState(!!contactId);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+    const toggleProfile = () => {
+    setIsProfileOpen(prev => !prev);
+    };
+
     useEffect(() => {
-        if (!contactId) {
-            setSelectedContact(null);
-            return;
-        }
+        const handleResize = () => {setIsMobile(window.innerWidth <= 768);};
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {setShowChat(!!contactId);},[contactId]);
+
+    useEffect(() => {
+        if (!contactId) {navigate("/");
+        return;}
 
         const contactFound = contacts.find((contact) => contact.id === Number(contactId));
+        if (!contactFound) {navigate("/");}}, [contactId, navigate]);
 
-        if (contactFound) {
-            setSelectedContact(contactFound);
-        } else {
-            navigate("/");
-        }
-    }, [contactId, navigate]);/*escucha el cambio si hay del  contact id traido de useparams
-    si hay un cambio e contactid se monta el useeffect*/
+    const selectedContact = contacts.find((c) => c.id === Number(contactId)) || null;
 
     const deleteMessage = (index) => {
-        if (!selectedContact) return;
-        const mensajesActualizados = [...messages[selectedContact.id]];
-        mensajesActualizados.splice(index, 1);
-        setMessages({
-            ...messages,
-            [selectedContact.id]: mensajesActualizados
-        });
-    };
+            if (!selectedContact) return;
+            const mensajesActualizados = [...messages[selectedContact.id]];
+            mensajesActualizados.splice(index, 1);
+            setMessages({
+                ...messages,
+                [selectedContact.id]: mensajesActualizados
+            });
+        };
 
     const deleteAllMessages = () => {
         if (!selectedContact) return;
-        const confirmDelete = window.confirm("¿Estás seguro de que querés borrar todos los mensajes?");
-        if (!confirmDelete) return;
-        setMessages({
-            ...messages,
-            [selectedContact.id]: []
-        });
+        if (!window.confirm("¿Estás seguro de que querés borrar todos los mensajes?")) 
+            return;
+        setMessages({...messages,[selectedContact.id]: [], });
     };
 
     const addNewMessage = (messageText) => {
         if (!selectedContact || !messageText.trim()) return;
-
-        const newMessage = {
-            id: Date.now(),
-            autor: "Homero",
-            texto: messageText.trim()
+        const newMessage = {id: Date.now(),  
+        autor: "Homero",
+        texto: messageText.trim(),
         };
-
-        setMessages(prevMessages => ({
-            ...prevMessages,
-            [selectedContact.id]: [...(prevMessages[selectedContact.id] || []), newMessage]
+        setMessages((prevMessages) => ({
+        ...prevMessages,
+        [selectedContact.id]: [...(prevMessages[selectedContact.id] || []), newMessage],
         }));
     };
 
     return (
-    <div className="chat-container">
-        <Sidebar setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
-
-        <Chats
+        <div className="chat-container">            
+        
+        {isMobile && showChat && (
+            <button className="back-button" onClick={() => navigate("/")}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 640 640"><path fill="#1dab62" d="M112 320C112 205.1 205.1 112 320 112C434.9 112 528 205.1 528 320C528 434.9 434.9 528 320 528C205.1 528 112 434.9 112 320zM576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576C461.4 576 576 461.4 576 320zM188.7 308.7C182.5 314.9 182.5 325.1 188.7 331.3L292.7 435.3C297.3 439.9 304.2 441.2 310.1 438.8C316 436.4 320 430.5 320 424L320 352L424 352C437.3 352 448 341.3 448 328L448 312C448 298.7 437.3 288 424 288L320 288L320 216C320 209.5 316.1 203.7 310.1 201.2C304.1 198.7 297.2 200.1 292.7 204.7L188.7 308.7z"/></svg>           
+            </button>   
+        )}
+        
+        {(!isMobile || !showChat) && (
+            <Sidebar
             selectedContact={selectedContact}
-            messages={selectedContact ? messages[selectedContact.id] : []}
+            setSelectedContact={(contact) => navigate(`/chat/${contact.id}`)}
+            />
+        )}
+
+
+
+        {(!isMobile || showChat) && (
+            <Chats
+            selectedContact={selectedContact}
+            messages={selectedContact ? messages[selectedContact.id] || [] : []}
             deleteMessage={deleteMessage}
             deleteAllMessages={deleteAllMessages}
             addNewMessage={addNewMessage}
-        />
-    </div>
-        
-
+            toggleProfile={toggleProfile}
+            isProfileOpen={isProfileOpen}
+            />
+        )}
+        </div>
     );
 };
 

@@ -1,24 +1,21 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: var(--sideBar-background);
     border-right: 1px solid #ccc;
     height: 100vh;
-    flex-shrink: 0;
-    width: 48rem;
-    min-width: 38rem;
-    max-width: 38rem;
+    width: 38rem;
 }
 
 .sidebar-header {
-    padding: 20px;
-    background-color: #ffffff;
+    background-color: var(--sideBar-background);
+    padding: 20px 20px 30px;
     color: #1daa61;
-    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 2.4rem;
     line-height: 1.5rem;
     text-align: left;
+    border: none;
 }
 
 .contact-list {
@@ -27,15 +24,14 @@
     margin: 0;
     flex-grow: 1;
     overflow-y: auto;
-    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .contact-item {
     display: flex;
     align-items: center;
+    gap: 12px;
     padding: 12px 20px;
     cursor: pointer;
-    gap: 12px;
     transition: background-color 0.2s ease;
 }
 
@@ -54,9 +50,9 @@
 }
 
 .contact-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 .contact-header {
@@ -94,11 +90,16 @@
     text-overflow: ellipsis;
 }
 
-
-.contact-footer .silence {
-    font-size: 1.6rem;
-}
 .silence {
     margin-left: 8px;
+    font-size: 1.6rem;
 }
 
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: 100vh;
+    }
+}

@@ -7,3 +7,17 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+:root{   
+    --sideBar-background: #ffffff;
+    --chatHeader-background: #ffffff;
+    --botonDescargar: #25d366;
+    --bubbleMessage-sent: rgb(216, 252, 210);
+    --bubbleMessage-received: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .chat-container {
+        flex-direction: column;
+    }
+}
