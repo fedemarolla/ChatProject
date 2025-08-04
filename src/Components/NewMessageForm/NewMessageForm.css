@@ -2,6 +2,7 @@ html {
     font-size: 62.5%; 
 }
 
+/* enviar mensaje */
 .new-message-form {
     display: flex;
     align-items: center;

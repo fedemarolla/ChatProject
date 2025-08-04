@@ -11,7 +11,7 @@
     height: 100%;
     overflow: hidden;
 }
-
+/* boton de volver */
 .back-button {
     background: var(--sideBar-background);
     border: none;

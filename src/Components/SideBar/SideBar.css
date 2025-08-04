@@ -6,7 +6,7 @@
     height: 100vh;
     width: 38rem;
 }
-
+/* lista de contactos */
 .sidebar-header {
     background-color: var(--sideBar-background);
     padding: 20px 20px 30px;
@@ -42,7 +42,7 @@
 .contact-item.selected {
     background-color: #e0e0e0;
 }
-
+/* edicion del contacto */
 .image-profile {
     width: 60px;
     height: 60px;

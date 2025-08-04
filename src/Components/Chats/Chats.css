@@ -222,7 +222,7 @@ font-size: 1.8rem;
         width: 100%;
         height: 100vh;
     }
-
+/* perfil del contacto celulares */
 .profile-panel{
     display: flex;
     flex-direction: column;
@@ -269,7 +269,7 @@ font-size: 1.8rem;
     padding-bottom: 2rem;
 }
 }
-
+/* perfiles del contacto mini-celulares */
 @media (min-width: 320px) and ( max-width: 420px ){
 .chat-header{
     display: flex;
